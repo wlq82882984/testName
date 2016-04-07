@@ -1,0 +1,126 @@
+//
+//  MJSpecificLineViewController.m
+//  MingJia
+//
+//  Created by admin on 15/12/31.
+//  Copyright © 2015年 BCKJ. All rights reserved.
+//
+
+#import "MJSpecificLineViewController.h"
+#import "MJInterOrderDefultViewController.h"
+#import "SpecificLineCell.h"
+
+@interface MJSpecificLineViewController ()<UITableViewDataSource,UITableViewDelegate,SpecificChooseDelegate>{
+    UITableView        *mainTabV;
+    NSMutableArray     *arrList;
+
+}
+
+@end
+
+@implementation MJSpecificLineViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.title = @"我的专线";
+    mainTabV = [UITableView createTableViewWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight-64) style:UITableViewStylePlain backgroundColor:WHITE_COLOR delegate:self dataSource:self];
+    [mainTabV setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [self.view addSubview:mainTabV];
+    [self requestgetcol]; // 获取收藏列表
+}
+
+//http://app.mjxypt.com/api/line/my?companyid=a1fae7f0-8a32-4d66-a572-5d2c3d82d8ac
+- (void)requestgetcol{
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    NSString *urlStr = [NSString stringWithFormat:@"http://app.mjxypt.com/api/line/my?companyid=%@",[[user objectForKey:@"UserLogin"] objectForKey:@"userId"]];
+    [Request getRequestWithUrl:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] params:nil showTips:@"获取列表" tipsType:SVProgressHUDMaskTypeClear sucessBlock:^(id responseObject) {
+        [SVProgressHUD dismiss];
+        NSArray *dict = (NSArray *)responseObject;
+        arrList = [dict mutableCopy];
+        [mainTabV reloadData];
+    } failBlock:^(NSError *error) {
+        
+    } successBackFailedBlock:^(id responseObject) {
+        
+    }];
+    
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return arrList.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSDictionary *model = arrList[indexPath.row];
+    SpecificLineCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if (!cell) {
+        cell = [[SpecificLineCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    }
+    cell.delegate = self;
+    cell.indexRow = indexPath.row;
+    cell.comNameLab.text = [model objectForKey:@"CompanyName"];
+    cell.rankStar = [[model objectForKey:@"Synthetic"]intValue];
+    cell.phoneLab = [model objectForKey:@"StartMobile"];
+    cell.teleLab = [model objectForKey:@"StartTel"];
+    cell.lineLab.text = [NSString stringWithFormat:@"%@-->%@",[model objectForKey:@"StartCity"],[model objectForKey:@"ArrivalCity"]];
+    cell.addressLab.text = [model objectForKey:@"StartAddr"];
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 130;
+}
+
+- (void)deCollect:(NSInteger)indexRow{
+    NSLog(@"取消的%i",(int)indexRow);
+    [self requestDecoll:(int)indexRow];
+}
+
+//    http://app.mjxypt.com/api/line/unfav?companyId=&lineId=
+- (void)requestDecoll:(int)row{
+    NSDictionary *model = arrList[row];
+    
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    NSString *urlStr = [NSString stringWithFormat:@"http://app.mjxypt.com/api/line/unfav?companyId=%@&lineId=%@",[[user objectForKey:@"UserLogin"] objectForKey:@"userId"],[model objectForKey:@"LineId"]];
+    
+    [Request getRequestWithUrl:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] params:nil showTips:@"取消收藏" tipsType:SVProgressHUDMaskTypeClear sucessBlock:^(id responseObject) {
+        [SVProgressHUD dismiss];
+        NSDictionary *dict = responseObject;
+        if ([[dict objectForKey:@"Code"]integerValue] == 0) {
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@",[dict objectForKey:@"Message"]] maskType:SVProgressHUDMaskTypeClear];
+        }
+        if ([[dict objectForKey:@"Code"]integerValue] == 1) {
+            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@",[dict objectForKey:@"Message"]] maskType:SVProgressHUDMaskTypeClear];
+            [self requestgetcol];
+        }
+        
+        
+    } failBlock:^(NSError *error) {
+        
+    } successBackFailedBlock:^(id responseObject) {
+        
+    }];
+}
+
+- (void)order:(NSInteger)indexRow{
+    NSLog(@"下单的%i",(int)indexRow);
+    NSDictionary *model = arrList[indexRow];
+    MJInterOrderDefultViewController *vc = [[MJInterOrderDefultViewController alloc]init];
+    vc.lineId = [model objectForKey:@"LineId"];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:[model objectForKey:@"StartProvince"] forKey:@"StartProvince"];
+    [dic setObject:[model objectForKey:@"StartCity"] forKey:@"StartCity"];
+    [dic setObject:[model objectForKey:@"StartAreas"] forKey:@"StartAreas"];
+    [dic setObject:[model objectForKey:@"ArrivalProvince"] forKey:@"ArrivalProvince"];
+    [dic setObject:[model objectForKey:@"ArrivalCity"] forKey:@"ArrivalCity"];
+    [dic setObject:[model objectForKey:@"ArrivalAreas"] forKey:@"ArrivalAreas"];
+    vc.placeDic = dic;
+    [self.navigationController pushViewController:vc animated:NO];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+@end

@@ -1,0 +1,15 @@
+//
+//  MJComplainViewController.h
+//  MingJia
+//
+//  Created by admin on 15/12/28.
+//  Copyright © 2015年 BCKJ. All rights reserved.
+//
+
+#import "BaseViewController.h"
+
+@interface MJComplainViewController : BaseViewController
+
+@property(nonatomic,copy)NSString      *complaintId;
+
+@end

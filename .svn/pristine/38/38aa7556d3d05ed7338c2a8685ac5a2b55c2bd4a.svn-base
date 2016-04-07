@@ -1,0 +1,105 @@
+//
+//  MJMyInfoViewController.m
+//  MingJia
+//
+//  Created by admin on 15/12/25.
+//  Copyright © 2015年 BCKJ. All rights reserved.
+//
+
+#import "MJMyInfoViewController.h"
+#import "MJMyinfoCell.h"
+
+@interface MJMyInfoViewController ()<UITableViewDataSource,UITableViewDelegate>{
+    UIScrollView      *mainScroll;
+    NSArray           *titArr;
+    NSArray           *iconArr;
+}
+
+@property(nonatomic,strong)UITableView *myTabV;
+
+@end
+
+@implementation MJMyInfoViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+ 
+    titArr = @[@[@"我的订单",@"整车订单",@"我的专线"],@[@"会员投诉"],@[@"已邀好友",@"联系客服"]];
+    iconArr = @[@[@"我的订单",@"整车订单",@"专线"],@[@"投诉"],@[@"已邀",@"联系客服"]];
+    self.title = @"用户中心";
+    [self drawView];
+}
+
+- (void)drawView{
+    mainScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, ScreenHeight, ScreenHeight - 64 - 48)];
+    mainScroll.backgroundColor = CLEAN_COLOR;
+    [self.view addSubview:mainScroll];
+    
+    UIView *headV = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 100)];
+    UIImageView *bg = [[UIImageView alloc]init];
+    bg.frame = headV.bounds;
+    bg.image = [UIImage imageNamed:@"bg"];
+    [headV addSubview:bg];
+    [mainScroll addSubview:headV];
+    
+    UIImageView *moreImg = [UIImageView createImageViewWithFrame: CGRectMake(ScreenWidth - 30, 40, 20, 20) backgroundColor:CLEAN_COLOR image:[UIImage imageNamed:@"更多"]];
+    [headV addSubview:moreImg];
+    
+    _myTabV = [UITableView createTableViewWithFrame:CGRectMake(0, 106, ScreenWidth, 320) style:UITableViewStylePlain backgroundColor:CLEAN_COLOR delegate:self dataSource:self];
+    [mainScroll addSubview:_myTabV];
+    _myTabV.scrollEnabled = NO;
+    [_myTabV registerClass:[MJMyinfoCell class] forCellReuseIdentifier:@"cell"];
+    
+    UIButton *outBtn = [UIButton createButtonwithFrame:CGRectMake(6, , <#CGFloat width#>, <#CGFloat height#>) backgroundColor:<#(UIColor *)#> titleColor:<#(UIColor *)#> title:<#(NSString *)#>];
+
+}
+
+#pragma mark  delegate
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return [titArr[section] count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    MJMyinfoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    if (!cell) {
+        cell = [[MJMyinfoCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    }
+    NSString *titName = [NSString stringWithFormat:@"%@",titArr[indexPath.section][indexPath.row]];
+    NSString *iconName = [NSString stringWithFormat:@"%@",iconArr[indexPath.section][indexPath.row]];
+    cell.titleLab.text = titName;
+    cell.iconImg.image = [UIImage imageNamed:iconName];
+    
+    for (int i = 0; i < titArr.count; i++) {
+        if (indexPath.section == i) {
+            if (indexPath.row == [titArr[indexPath.section] count] - 1) {
+                [cell.tapline removeFromSuperview];
+            }
+        }
+    }
+    return cell;
+}
+
+#pragma mark  datasouce
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 50;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (section == 0) {
+        return 0;
+    }
+    else {
+        return 10;
+    }
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return titArr.count;
+}
+
+
+
+
+
+
+@end

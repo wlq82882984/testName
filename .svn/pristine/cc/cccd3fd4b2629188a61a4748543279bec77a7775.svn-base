@@ -1,0 +1,59 @@
+//
+//  MJComplainViewController.m
+//  MingJia
+//
+//  Created by admin on 15/12/28.
+//  Copyright © 2015年 BCKJ. All rights reserved.
+//
+
+#import "MJComplainViewController.h"
+
+@interface MJComplainViewController ()<UITableViewDataSource,UITableViewDelegate>{
+    UIScrollView      *mainScroll;
+    NSArray           *typeArr;
+    UITableView       *typeTabV;
+    UITextField       *complainName;
+    UITextField       *complainTele;
+    UITextField       *complainedName;
+    UITextField       *complainedTele;
+    UITextView        *evalTextV;
+    
+    UIButton          *photoBtn;    // 拍照上传
+    UIButton          *commitBtn;   // 提交
+    
+}
+
+@end
+
+@implementation MJComplainViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.title = @"投诉";
+    typeArr = @[@"运输时效",@"运费问题",@"提货问题",@"服务问题",@"软件问题",@"其他"];
+    
+    mainScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 64)];
+    mainScroll.backgroundColor = WHITE_COLOR;
+    
+    [self drawView];
+    
+    
+    
+    
+    
+    
+    
+    
+    
+}
+
+- (void)drawView{
+    typeTabV = [UITableView createTableViewWithFrame:CGRectMake(0, 0, ScreenWidth, 40) style:UITableViewStylePlain backgroundColor:CLEAN_COLOR delegate:self dataSource:self];
+    [mainScroll addSubview:typeTabV];
+    
+    
+    
+}
+
+
+@end

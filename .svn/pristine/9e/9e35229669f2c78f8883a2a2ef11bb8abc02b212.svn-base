@@ -1,0 +1,69 @@
+//
+//  MJPTJSViewController.m
+//  MingJia
+//
+//  Created by admin on 16/1/8.
+//  Copyright © 2016年 BCKJ. All rights reserved.
+//
+
+#import "MJPTJSViewController.h"
+
+@interface MJPTJSViewController ()
+
+@end
+
+@implementation MJPTJSViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.title = @"平台介绍";
+    [self drawView];
+    
+}
+
+- (void)drawView{
+    UILabel *title1 = [UILabel createLabelWithFrame:CGRectMake(0, 0, ScreenWidth - 10, 0) backgroundColor:CLEAN_COLOR textColor:[UIColor orangeColor] font:SYSTEM_FONT_(20) textalignment:NSTextAlignmentLeft text:@"《明佳信用平台》主要针对物流市场采取以信用为基础、以信用度为衡量标准的考核机制，实现专线、三方、企业信息化操作、降低成本，合作共赢。"];
+    title1.numberOfLines = 0;
+    
+    UILabel *title2 = [UILabel createLabelWithFrame:CGRectMake(0, 0, ScreenWidth - 10, 0) backgroundColor:CLEAN_COLOR textColor:TABBAR_TEXT_COLOR_SEL font:SYSTEM_FONT_(20) textalignment:NSTextAlignmentLeft text:@" 平台开发专线软件，手机微信，手机APP三维一体，实现在线下单，在线询价，在线跟踪，在线办单，在线支付，在线评价等功能。平台规定："];
+    title2.numberOfLines = 0;
+    
+    CGSize size1 = [self getLabelsize:title1.text andTextsize:20 andLabwidth:ScreenWidth-10];
+    CGSize size2 = [self getLabelsize:title2.text andTextsize:20 andLabwidth:ScreenWidth-10];
+    
+    int offset = 10;
+    title1.frame = CGRectMake(5, offset, ScreenWidth - 10, size1.height);
+    
+    offset += size1.height +20;
+    title2.frame = CGRectMake(5, offset, ScreenWidth - 10, size2.height);
+    
+    [self.view addSubview:title1];
+    [self.view addSubview:title2];
+    
+    UILabel *title3 = [UILabel createLabelWithFrame:CGRectMake(0, 0, ScreenWidth - 10, 0) backgroundColor:CLEAN_COLOR textColor:TABBAR_TEXT_COLOR_SEL font:SYSTEM_FONT_(20) textalignment:NSTextAlignmentLeft text:@"一、货物迟到1天扣10%运费。"];
+    title3.numberOfLines = 0;
+    offset += size2.height +10;
+    title3.frame = CGRectMake(5, offset, ScreenWidth - 10, 20);
+    [self.view addSubview:title3];
+    
+    UILabel *title4 = [UILabel createLabelWithFrame:CGRectMake(0, 0, ScreenWidth - 10, 0) backgroundColor:CLEAN_COLOR textColor:TABBAR_TEXT_COLOR_SEL font:SYSTEM_FONT_(20) textalignment:NSTextAlignmentLeft text:@"二、回单迟到1天扣1%运单。"];
+    title4.numberOfLines = 0;
+    offset += 30;
+    title4.frame = CGRectMake(5, offset, ScreenWidth - 10, 20);
+    [self.view addSubview:title4];
+    
+    UILabel *title5 = [UILabel createLabelWithFrame:CGRectMake(0, 0, ScreenWidth - 10, 0) backgroundColor:CLEAN_COLOR textColor:TABBAR_TEXT_COLOR_SEL font:SYSTEM_FONT_(20) textalignment:NSTextAlignmentLeft text:@"三、货损15天内解决。"];
+    title5.numberOfLines = 0;
+    offset += 30;
+    title5.frame = CGRectMake(5, offset, ScreenWidth - 10, 20);
+    [self.view addSubview:title5];
+    
+    UILabel *title6 = [UILabel createLabelWithFrame:CGRectMake(0, 0, ScreenWidth - 10, 0) backgroundColor:CLEAN_COLOR textColor:TABBAR_TEXT_COLOR_SEL font:SYSTEM_FONT_(20) textalignment:NSTextAlignmentLeft text:@"四、可在平台上查找专线，下单。"];
+    title6.numberOfLines = 0;
+    offset += 30;
+    title6.frame = CGRectMake(5, offset, ScreenWidth - 10, 20);
+    [self.view addSubview:title6];
+}
+
+
+@end

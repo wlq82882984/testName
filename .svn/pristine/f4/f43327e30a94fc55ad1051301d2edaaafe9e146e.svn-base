@@ -1,0 +1,69 @@
+//
+//  BaseViewController.m
+//  RiTao
+//
+//  Created by admin on 15/12/16.
+//  Copyright © 2015年 BCKJ. All rights reserved.
+//
+
+#import "BaseViewController.h"
+
+@interface BaseViewController ()
+
+@end
+
+@implementation BaseViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+//    self.navigationController.navigationBarHidden = YES;
+}
+
+- (void)removeNavigationBottomLine{
+    // 去除导航栏下方的黑边
+    if ([self.navigationController.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)]){
+        NSArray *list=self.navigationController.navigationBar.subviews;
+        for (id obj in list) {
+            if ([obj isKindOfClass:[UIImageView class]]) {
+                UIImageView *imageView=(UIImageView *)obj;
+                NSArray *list2=imageView.subviews;
+                for (id obj2 in list2) {
+                    if ([obj2 isKindOfClass:[UIImageView class]]) {
+                        UIImageView *imageView2=(UIImageView *)obj2;
+                        imageView2.hidden=YES;
+                    }
+                }
+            }
+        }
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"透明"] forBarMetrics:UIBarMetricsCompact];
+    self.navigationController.navigationBarHidden = NO;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.view.backgroundColor = [UIColor colorWithHex:0xf2f2f2 alpha:1.0];
+//    [self.navigationController.navigationBar setTranslucent:NO];
+    [self.navigationController.navigationBar setTranslucent:YES];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont fontWithName:@"HelveticaNeue-Bold" size:18],NSFontAttributeName,nil]];
+}
+
+-(CGSize)gotLabelsize:(NSString *)text andTextsize:(int)textsize andLabwidth:(int)width{
+    UILabel *label = [[UILabel alloc]init];
+    label.text = text;
+    label.numberOfLines = 1000;
+    CGSize size = CGSizeMake(width, 9999);
+    NSDictionary *attribute = @{NSFontAttributeName: [UIFont systemFontOfSize:textsize]};
+    CGSize labelSize = [text boundingRectWithSize:size options: NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attribute context:nil].size;
+    return labelSize;
+}
+
+@end

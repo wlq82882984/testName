@@ -1,0 +1,30 @@
+//
+//  LineListCell.h
+//  MingJia
+//
+//  Created by admin on 15/12/26.
+//  Copyright © 2015年 BCKJ. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface LineListCell : UITableViewCell
+
+@property(nonatomic,strong)UILabel     *comNameLab;
+@property(nonatomic,strong)UILabel     *rankLab;
+@property(nonatomic,strong)UILabel     *nameLab;
+@property(nonatomic,strong)UILabel     *lineLab;
+@property(nonatomic,strong)UILabel     *addressLab;
+@property(nonatomic,strong)UILabel     *tapLine;
+@property(nonatomic,strong)UIButton    *seleBtn;
+@property(nonatomic,strong)UILabel     *chooseLab;
+
+@property(nonatomic,copy)NSString       *phoneLab;
+@property(nonatomic,copy)NSString       *teleLab;
+@property(nonatomic,assign)int          rankStar;
+@property(nonatomic,assign)BOOL         isChoose;
+@property(nonatomic,assign)NSInteger    indexRow;  // 创建cell时挂
+
+
+
+@end

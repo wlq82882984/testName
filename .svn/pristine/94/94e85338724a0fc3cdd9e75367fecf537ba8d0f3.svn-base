@@ -1,0 +1,16 @@
+//
+//  MJCarChangeViewController.h
+//  MingJia
+//
+//  Created by admin on 15/12/30.
+//  Copyright © 2015年 BCKJ. All rights reserved.
+//
+
+#import "BaseViewController.h"
+
+@interface MJCarChangeViewController : BaseViewController
+
+@property(nonatomic,assign)BOOL isFromList;   // 判断是否是从个人中心过去的
+@property(nonatomic,copy)NSString *orderId;   // 是会有订单的Id的
+
+@end

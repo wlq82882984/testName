@@ -1,0 +1,25 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "b2b9aec6-a473-5a4d-b301-759c776c7984++3550",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "b2b9aec6-a473-5a4d-b301-759c776c7984++3550" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "b2b9aec6-a473-5a4d-b301-759c776c7984++3550" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "128946D8-5B64-4EF7-A10E-3DE8B96BB562",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "b2b9aec6-a473-5a4d-b301-759c776c7984++3550" : "MingJia\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "MingJia",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "MingJia.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/114.215.185.144:8443\/svn\/team1",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "b2b9aec6-a473-5a4d-b301-759c776c7984++3550"
+    }
+  ]
+}

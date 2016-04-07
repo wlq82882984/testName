@@ -1,0 +1,9 @@
+platform:ios, '7.0'
+pod 'SDWebImage', '~>3.7.3'
+pod 'AFNetworking', '~> 2.6.3'
+pod 'UIAlertView-Blocks', '~> 1.0'
+pod 'ALToastView', '~> 0.0.1'
+pod 'MJExtension'
+pod 'MJRefresh'
+pod 'SVProgressHUD', '~> 1.1.3'
+

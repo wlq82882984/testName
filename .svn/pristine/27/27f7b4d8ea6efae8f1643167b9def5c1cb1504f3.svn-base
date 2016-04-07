@@ -1,0 +1,61 @@
+//
+//  MJSpecificLineViewController.m
+//  MingJia
+//
+//  Created by admin on 15/12/31.
+//  Copyright © 2015年 BCKJ. All rights reserved.
+//
+
+#import "MJSpecificLineViewController.h"
+#import "SpecificLineCell.h"
+
+@interface MJSpecificLineViewController ()<UITableViewDataSource,UITableViewDelegate,SpecificChooseDelegate>{
+    UITableView *mainTabV;
+}
+
+@end
+
+@implementation MJSpecificLineViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.title = @"我的专线";
+    mainTabV = [UITableView createTableViewWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight-64) style:UITableViewStylePlain backgroundColor:WHITE_COLOR delegate:self dataSource:self];
+    [self.view addSubview:mainTabV];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 4;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    SpecificLineCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if (!cell) {
+        cell = [[SpecificLineCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    }
+    cell.delegate = self;
+    cell.phoneLab = @"13815333333";
+    cell.teleLab = @"0915-72726212";
+    cell.indexRow = indexPath.row;
+    cell.rankStar = 4;
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 130;
+}
+
+- (void)deCollect:(NSInteger)indexRow{
+    NSLog(@"取消的%i",(int)indexRow);
+}
+
+- (void)order:(NSInteger)indexRow{
+    NSLog(@"下单的%i",(int)indexRow);
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+@end

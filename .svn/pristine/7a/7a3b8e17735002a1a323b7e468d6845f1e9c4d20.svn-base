@@ -1,0 +1,61 @@
+//
+//  MJCarOrderViewController.m
+//  MingJia
+//
+//  Created by admin on 15/12/30.
+//  Copyright © 2015年 BCKJ. All rights reserved.
+//
+
+#import "MJCarOrderViewController.h"
+#import "MJCarChangeViewController.h"
+#import "MJCarOrderCell.h"
+
+@interface MJCarOrderViewController ()<UITableViewDataSource,UITableViewDelegate>
+
+@property(nonatomic,strong)UITableView *mainTab;
+
+@end
+
+@implementation MJCarOrderViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.title = @"整车订单";
+    [self drawTabV];
+}
+
+- (void)drawTabV{
+    _mainTab = [UITableView createTableViewWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 64) style:UITableViewStylePlain backgroundColor:CLEAN_COLOR delegate:self dataSource:self];
+    _mainTab.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.view addSubview:_mainTab];
+}
+
+#pragma mark UITableViewDataSource
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 2;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    MJCarOrderCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if (!cell) {
+        cell = [[MJCarOrderCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    }
+    return cell;
+}
+
+#pragma mark UITableViewDelegate
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 100;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    MJCarChangeViewController *vc = [[MJCarChangeViewController alloc]init];
+    [self.navigationController pushViewController:vc animated:NO];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+@end

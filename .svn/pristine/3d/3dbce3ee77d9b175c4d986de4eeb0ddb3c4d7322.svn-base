@@ -1,0 +1,100 @@
+//
+//  MJSearchResultViewController.m
+//  MingJia
+//
+//  Created by admin on 15/12/30.
+//  Copyright © 2015年 BCKJ. All rights reserved.
+//
+
+#import "MJSearchResultViewController.h"
+
+@interface MJSearchResultViewController (){
+    UILabel *okLab;
+    UILabel * orderLab;
+    UILabel *compName;
+    UIImageView *imgv;
+}
+
+@property(nonatomic,strong)UITableView *mainTabV;
+
+@end
+
+@implementation MJSearchResultViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.title = @"查询结果";
+    [self sendRequestOrder];
+    self.view.backgroundColor = [UIColor colorWithHex:0xe2e2e2 alpha:1.0];
+}
+
+- (void)sendRequestOrder{
+    [self drawView];
+}
+
+- (void)drawView{
+    // 有没有数据分情况
+    [self drawHead];
+    
+    [self drawBodyV];
+    
+    
+}
+
+- (void)drawBodyV{
+// 是否有数据
+    UIView *body = [UIView createViewWithFrame:CGRectMake(0, 40, ScreenWidth, 130) backgroundColor:WHITE_COLOR];
+    [self.view addSubview:body];
+    
+    UILabel *sorryLab = [UILabel createLabelWithFrame:CGRectMake(0, 90, ScreenWidth, 16) backgroundColor:CLEAN_COLOR textColor:[UIColor blackColor] font:SYSTEM_FONT_(16) textalignment:NSTextAlignmentCenter text:@"很抱歉，没有查到相关信息"];
+    [body addSubview:sorryLab];
+    
+    UILabel *titLab = [UILabel createLabelWithFrame:CGRectMake(50, 220, ScreenWidth - 50, 16) backgroundColor:CLEAN_COLOR textColor:[UIColor blackColor] font:SYSTEM_FONT_(16) textalignment:NSTextAlignmentLeft text:@"可能原因"];
+    [self.view addSubview:titLab];
+    UILabel *tit1Lab = [UILabel createLabelWithFrame:CGRectMake(50, 250, ScreenWidth - 50, 16) backgroundColor:CLEAN_COLOR textColor:[UIColor blackColor] font:SYSTEM_FONT_(15) textalignment:NSTextAlignmentLeft text:@"  >您的货物刚刚提货，还未来得及录入"];
+    [self.view addSubview:tit1Lab];
+    UILabel *tit2Lab = [UILabel createLabelWithFrame:CGRectMake(50, 280, ScreenWidth - 50, 16) backgroundColor:CLEAN_COLOR textColor:[UIColor blackColor] font:SYSTEM_FONT_(15) textalignment:NSTextAlignmentLeft text:@"  >您输入的单号有或超过六个月"];
+    [self.view addSubview:tit2Lab];
+    UILabel *tit3Lab = [UILabel createLabelWithFrame:CGRectMake(50, 310, ScreenWidth - 50, 16) backgroundColor:CLEAN_COLOR textColor:[UIColor blackColor] font:SYSTEM_FONT_(15) textalignment:NSTextAlignmentLeft text:@"  >请联系客服"];
+    [self.view addSubview:tit3Lab];
+    
+    UIButton *teleBtn = [UIButton createButtonwithFrame:CGRectMake(150, 310, 100, 16) backgroundColor:CLEAN_COLOR image:[UIImage imageNamed:@""]];
+    teleBtn.titleLabel.font = SYSTEM_FONT_(15);
+//    [teleBtn addTarget:self action:@selector(打电话) forControlEvents:UIControlEventTouchUpInside];
+    [teleBtn setTitleColor:TABBAR_TEXT_COLOR_SEL forState:UIControlStateNormal];
+    [teleBtn setTitle:@"18961872005" forState:UIControlStateNormal];
+    [self.view addSubview:teleBtn];
+    
+}
+
+- (void)drawHead{
+    UIView *head = [UIView createViewWithFrame:CGRectMake(0, 0, ScreenWidth, 40) backgroundColor:WHITE_COLOR];
+    [self.view addSubview:head];
+    
+    orderLab = [UILabel createLabelWithFrame:CGRectMake(10, 5, SizeScale(200), 14) backgroundColor:CLEAN_COLOR textColor:[UIColor blackColor] font:SYSTEM_FONT_BOLD_(14) textalignment:NSTextAlignmentLeft text:@"运单号："];
+    [head addSubview:orderLab];
+    
+    compName = [UILabel createLabelWithFrame:CGRectMake(10, 23, SizeScale(200), 14) backgroundColor:CLEAN_COLOR textColor:[UIColor redColor] font:SYSTEM_FONT_(12) textalignment:NSTextAlignmentLeft text:@"无锡市XXX运货有限公司"];
+    [head addSubview:compName];
+    
+    UILabel *tapline = [UILabel createLabelWithFrame:CGRectMake(10, 39, ScreenWidth, 1) backgroundColor:[UIColor colorWithHex:0xe2e2e2 alpha:1.0] textColor:[UIColor redColor] font:SYSTEM_FONT_(12) textalignment:NSTextAlignmentLeft text:@""];
+    [head addSubview:tapline];
+    
+    UILabel *tapline2 = [UILabel createLabelWithFrame:CGRectMake(SizeScale(201), 0, 1, 40) backgroundColor:[UIColor colorWithHex:0xe2e2e2 alpha:1.0] textColor:[UIColor redColor] font:SYSTEM_FONT_(12) textalignment:NSTextAlignmentLeft text:@""];
+    [head addSubview:tapline2];
+    
+    imgv = [UIImageView createImageViewWithFrame:CGRectMake(SizeScale(210), 10, 20, 20) backgroundColor:CLEAN_COLOR image:[UIImage imageNamed:@"笑脸"]];
+    [head addSubview:imgv];
+    
+    okLab = [UILabel createLabelWithFrame:CGRectMake(SizeScale(210)+ 25, 23, 70, 14) backgroundColor:CLEAN_COLOR textColor:[UIColor blackColor] font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentLeft text:@"查询成功"];
+    [head addSubview:compName];
+}
+
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+@end

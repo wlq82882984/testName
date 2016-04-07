@@ -1,0 +1,122 @@
+//
+//  QuoteCell.m
+//  MingJia
+//
+//  Created by admin on 16/1/3.
+//  Copyright © 2016年 BCKJ. All rights reserved.
+//
+
+#import "QuoteCell.h"
+
+@implementation QuoteCell{
+    UIImageView     *imgstar1;
+    UIImageView     *imgstar2;
+    UIImageView     *imgstar3;
+    UIImageView     *imgstar4;
+    UIImageView     *imgstar5;
+}
+
+- (void)awakeFromNib {
+}
+
+- (void)setRankStar:(int)rankStar{
+    // 设置信用星级别，可以绘画星星 ,下同
+    _rankStar = rankStar;
+    switch (rankStar) {
+        case 0:
+        {
+            [imgstar1 removeFromSuperview];
+            [imgstar2 removeFromSuperview];
+            [imgstar3 removeFromSuperview];
+            [imgstar4 removeFromSuperview];
+            [imgstar5 removeFromSuperview];
+        }
+            break;
+        case 1:
+        {
+            [imgstar2 removeFromSuperview];
+            [imgstar3 removeFromSuperview];
+            [imgstar4 removeFromSuperview];
+            [imgstar5 removeFromSuperview];
+        }
+            break;
+        case 2:
+        {
+            [imgstar3 removeFromSuperview];
+            [imgstar4 removeFromSuperview];
+            [imgstar5 removeFromSuperview];
+        }
+            break;
+        case 3:
+        {
+            [imgstar4 removeFromSuperview];
+            [imgstar5 removeFromSuperview];
+        }
+            break;
+        case 4:
+        {
+            [imgstar5 removeFromSuperview];
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+}
+
+- (void)setIndexRow:(int)indexRow{
+    _indexRow = indexRow;
+}
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    if (self) {
+        _nameLab = [UILabel createLabelWithFrame:CGRectMake(10, 10, 70, 16)  backgroundColor:CLEAN_COLOR textColor:Color_font_light font:SYSTEM_FONT_(16) textalignment:NSTextAlignmentLeft text:@""];
+        [self addSubview:_nameLab];
+        
+        _phoneLab = [UILabel createLabelWithFrame:CGRectMake(10, 100, 150, 14) backgroundColor:CLEAN_COLOR textColor:Color_font_dark font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentLeft text:@"奥斯卡 28172386826"];
+        [self addSubview:_phoneLab];
+        
+        _detailLab = [UILabel createLabelWithFrame:CGRectMake(10, 100, 150, 14) backgroundColor:CLEAN_COLOR textColor:Color_font_dark font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentLeft text:@"出价：10w"];
+        [self addSubview:_detailLab];
+        
+        _addLab = [UILabel createLabelWithFrame:CGRectMake(10, 100, 150, 14) backgroundColor:CLEAN_COLOR textColor:Color_font_dark font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentLeft text:@"软件园二分法第三方地方v"];
+        [self addSubview:_addLab];
+        
+        imgstar1 = [UIImageView createImageViewWithFrame:CGRectMake(90, 10, 15, 15) backgroundColor:CLEAN_COLOR image:[UIImage imageNamed:@"线路_评价"]];
+        [self addSubview:imgstar1];
+        imgstar2 = [UIImageView createImageViewWithFrame:CGRectMake(105, 10, 15, 15) backgroundColor:CLEAN_COLOR image:[UIImage imageNamed:@"线路_评价"]];
+        [self addSubview:imgstar2];
+        imgstar3 = [UIImageView createImageViewWithFrame:CGRectMake(120, 10, 15, 15) backgroundColor:CLEAN_COLOR image:[UIImage imageNamed:@"线路_评价"]];
+        [self addSubview:imgstar3];
+        imgstar4 = [UIImageView createImageViewWithFrame:CGRectMake(135, 10, 15, 15) backgroundColor:CLEAN_COLOR image:[UIImage imageNamed:@"线路_评价"]];
+        [self addSubview:imgstar4];
+        imgstar5 = [UIImageView createImageViewWithFrame:CGRectMake(150, 10, 15, 15) backgroundColor:CLEAN_COLOR image:[UIImage imageNamed:@"线路_评价"]];
+        [self addSubview:imgstar5];
+        
+        _commitbtn = [UIButton createButtonwithFrame:CGRectMake(ScreenWidth - 77, 20, 20, 20) backgroundColor:CLEAN_COLOR image:[UIImage imageNamed:@"修改"]];
+        [_commitbtn addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:_commitbtn];
+        
+        _typeLab = [UILabel createLabelWithFrame:CGRectMake(ScreenWidth - 90, 40, 30, 12) backgroundColor:CLEAN_COLOR textColor:Color_font_light font:SYSTEM_FONT_(12) textalignment:NSTextAlignmentLeft text:@"确认"];
+        [self addSubview:_typeLab];
+        
+        UILabel *tapLine = [UILabel createLabelWithFrame:CGRectMake(0, 109, ScreenWidth, 1) backgroundColor:COLOR_line textColor:Color_font_dark font:SYSTEM_FONT_(12) textalignment:NSTextAlignmentLeft text:@""];
+        [self addSubview:tapLine];
+        
+    }
+    return self;
+}
+
+- (void)btnAction:(id)sender{
+    if (_delegate && [_delegate respondsToSelector:@selector(commitWithIndex:)]) {
+        [_delegate commitWithIndex:_indexRow];
+    }
+}
+
+@end

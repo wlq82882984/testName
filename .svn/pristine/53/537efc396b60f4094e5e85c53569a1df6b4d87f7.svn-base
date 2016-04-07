@@ -1,0 +1,150 @@
+//
+//  MJHomeViewController.m
+//  MingJia
+//
+//  Created by admin on 15/12/24.
+//  Copyright © 2015年 BCKJ. All rights reserved.
+//
+
+#import "MJHomeViewController.h"
+#import "MyAdView.h"
+
+@interface MJHomeViewController (){
+    UIScrollView *mainScroll;
+    UITextField  *searchText;
+    UIButton *btn01;
+    UIButton *btn02;
+    UIButton *btn03;
+    
+    UIButton *btn11;
+    UIButton *btn12;
+    UIButton *btn13;
+}
+
+@property(nonatomic,strong)MyAdView *myADview;
+
+@end
+
+@implementation MJHomeViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.title = @"首页";
+    
+    [self drawView];
+}
+
+- (void)drawView{
+    mainScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, ScreenHeight, ScreenHeight - 64 - 48)];
+    mainScroll.backgroundColor = CLEAN_COLOR;
+    [self.view addSubview:mainScroll];
+    
+    _myADview = [[MyAdView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, SizeScale(54))];
+    [mainScroll addSubview:_myADview];
+    
+    UIView *searchVl = [UIView createViewWithFrame:CGRectMake(6, SizeScale(54)+5, ScreenWidth/2 - 6, 30) backgroundColor:HEXCOLOR(0x999a9a)];
+    [mainScroll addSubview:searchVl];
+    searchVl.layer.cornerRadius = 6;
+    UIImageView *camImg = [UIImageView createImageViewWithFrame:CGRectMake( 8, 3, 30, 25) backgroundColor:CLEAN_COLOR image:[UIImage imageNamed:@"首页_照相机"]];
+    [searchVl addSubview:camImg];
+    UIView *searchVr = [UIView createViewWithFrame:CGRectMake(ScreenWidth/2, SizeScale(54)+5, ScreenWidth/2 - 6, 30) backgroundColor:HEXCOLOR(0x3598dc)];
+    [mainScroll addSubview:searchVr];
+    searchVr.layer.cornerRadius = 6;
+    UIImageView *seaImg = [UIImageView createImageViewWithFrame:CGRectMake( ScreenWidth/2 -40, 3, 25, 25) backgroundColor:CLEAN_COLOR image:[UIImage imageNamed:@"首页_搜索"]];
+    [searchVr addSubview:seaImg];
+    searchText = [UITextField createTextFieldWithFrame:CGRectMake(46, SizeScale(54)+5, ScreenWidth-92, 30) backgroundColor:WHITE_COLOR borderStyle:UITextBorderStyleNone placeholder:@" 输入查询单号" text:@"" textColor:[UIColor blackColor] font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentLeft];
+    [mainScroll addSubview:searchText];
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    UIView *view1 = [UIView createViewWithFrame:CGRectMake(6, SizeScale(54)+40, ScreenWidth/2-9, SizeScale(200)) backgroundColor:HEXCOLOR(0xf49c14)];
+    view1.layer.cornerRadius = 6;
+    [mainScroll addSubview:view1];
+    UIImageView *icon1 = [UIImageView createImageViewWithFrame:CGRectMake(0, 0, 30, 30) backgroundColor:CLEAN_COLOR image:[UIImage imageNamed:@"首页_零担"]];
+    icon1.frame = CGRectMake(ScreenWidth/4 - 18, SizeScale(60), 30, 30);
+    [view1 addSubview:icon1];
+    btn01 = [UIButton createButtonwithFrame:view1.bounds backgroundColor:CLEAN_COLOR conrnerRadius:0 borderWidth:0 borderColor:CLEAN_COLOR];
+    [btn01 setTitle:@"零担下单" forState:UIControlStateNormal];
+    btn01.titleLabel.font = SYSTEM_FONT_(14);
+    [btn01 setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+    [btn01 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [view1 addSubview:btn01];
+    
+    UIView *view2 = [UIView createViewWithFrame:CGRectMake(ScreenWidth/2+3, SizeScale(54)+40, ScreenWidth/2-9, SizeScale(97)) backgroundColor:HEXCOLOR(0x61a6c3)];
+    [mainScroll addSubview:view2];
+    view2.layer.cornerRadius = 6;
+    UIImageView *icon2 = [UIImageView createImageViewWithFrame:CGRectMake(0, 0, 30, 30) backgroundColor:CLEAN_COLOR image:[UIImage imageNamed:@"首页_信用平台"]];
+    icon2.frame = CGRectMake(ScreenWidth/4 - 18, SizeScale(25), 30, 30);
+    [view2 addSubview:icon2];
+    btn02 = [UIButton createButtonwithFrame:view2.bounds backgroundColor:CLEAN_COLOR conrnerRadius:0 borderWidth:0 borderColor:CLEAN_COLOR];
+    [btn02 setTitle:@"信用平台" forState:UIControlStateNormal];
+    btn02.titleLabel.font = SYSTEM_FONT_(14);
+    [btn02 setTitleEdgeInsets:UIEdgeInsetsMake(SizeScale(30), 0, 0, 0)];
+    [btn02 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [view2 addSubview:btn02];
+    
+    UIView *view3 = [UIView createViewWithFrame:CGRectMake(ScreenWidth/2+3, SizeScale(157)+40, ScreenWidth/2-9, SizeScale(97)) backgroundColor:HEXCOLOR(0x999a9a)];
+    [mainScroll addSubview:view3];
+    view3.layer.cornerRadius = 6;
+    UIImageView *icon3 = [UIImageView createImageViewWithFrame:CGRectMake(0, 0, 30, 30) backgroundColor:CLEAN_COLOR image:[UIImage imageNamed:@"首页_查询"]];
+    icon3.frame = CGRectMake(ScreenWidth/4 - 18, SizeScale(25), 30, 30);
+    [view3 addSubview:icon3];
+    btn03 = [UIButton createButtonwithFrame:view3.bounds backgroundColor:CLEAN_COLOR conrnerRadius:0 borderWidth:0 borderColor:CLEAN_COLOR];
+    [btn03 setTitle:@"专线信用查询" forState:UIControlStateNormal];
+    btn03.titleLabel.font = SYSTEM_FONT_(14);
+    [btn03 setTitleEdgeInsets:UIEdgeInsetsMake(SizeScale(30), 0, 0, 0)];
+    [btn03 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [view3 addSubview:btn03];
+    
+    UIView *view4 = [UIView createViewWithFrame:CGRectMake(6, SizeScale(254)+45, ScreenWidth/2-9, SizeScale(200)) backgroundColor:HEXCOLOR(0x3598dc)];
+    view4.layer.cornerRadius = 6;
+    [mainScroll addSubview:view4];
+    UIImageView *icon4 = [UIImageView createImageViewWithFrame:CGRectMake(0, 0, 30, 30) backgroundColor:CLEAN_COLOR image:[UIImage imageNamed:@"首页_网上办单"]];
+    icon4.frame = CGRectMake(ScreenWidth/4 - 18, SizeScale(60), 30, 30);
+    [view4 addSubview:icon4];
+    btn11 = [UIButton createButtonwithFrame:view4.bounds backgroundColor:CLEAN_COLOR conrnerRadius:0 borderWidth:0 borderColor:CLEAN_COLOR];
+    [btn11 setTitle:@"网上办单" forState:UIControlStateNormal];
+    btn11.titleLabel.font = SYSTEM_FONT_(14);
+    [btn11 setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+    [btn11 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [view4 addSubview:btn11];
+    
+    UIView *view5 = [UIView createViewWithFrame:CGRectMake(ScreenWidth/2+3, SizeScale(254)+45, ScreenWidth/2-9, SizeScale(97)) backgroundColor:HEXCOLOR(0xed6900)];
+    [mainScroll addSubview:view5];
+    view5.layer.cornerRadius = 6;
+    UIImageView *icon5 = [UIImageView createImageViewWithFrame:CGRectMake(0, 0, 30, 30) backgroundColor:CLEAN_COLOR image:[UIImage imageNamed:@"首页_整车"]];
+    icon5.frame = CGRectMake(ScreenWidth/4 - 18, SizeScale(25), 30, 30);
+    [view5 addSubview:icon5];
+    btn12 = [UIButton createButtonwithFrame:view5.bounds backgroundColor:CLEAN_COLOR conrnerRadius:0 borderWidth:0 borderColor:CLEAN_COLOR];
+    [btn12 setTitle:@"整车入单" forState:UIControlStateNormal];
+    btn12.titleLabel.font = SYSTEM_FONT_(14);
+    [btn12 setTitleEdgeInsets:UIEdgeInsetsMake(SizeScale(30), 0, 0, 0)];
+    [btn12 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [view5 addSubview:btn12];
+
+    UIView *view6 = [UIView createViewWithFrame:CGRectMake(ScreenWidth/2+3, SizeScale(357)+45, ScreenWidth/2-9, SizeScale(97)) backgroundColor:HEXCOLOR(0x696568)];
+    [mainScroll addSubview:view6];
+    view6.layer.cornerRadius = 6;
+    UIImageView *icon6 = [UIImageView createImageViewWithFrame:CGRectMake(0, 0, 30, 30) backgroundColor:CLEAN_COLOR image:[UIImage imageNamed:@"首页_约货"]];
+    icon6.frame = CGRectMake(ScreenWidth/4 - 18, SizeScale(25), 30, 30);
+    [view6 addSubview:icon6];
+    btn13 = [UIButton createButtonwithFrame:view6.bounds backgroundColor:CLEAN_COLOR conrnerRadius:0 borderWidth:0 borderColor:CLEAN_COLOR];
+    [btn13 setTitle:@"同城货的" forState:UIControlStateNormal];
+    btn13.titleLabel.font = SYSTEM_FONT_(14);
+    [btn13 setTitleEdgeInsets:UIEdgeInsetsMake(SizeScale(30), 0, 0, 0)];
+    [btn13 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [view6 addSubview:btn13];
+    
+    CGFloat h = CGRectGetMaxY(view6.frame);
+    mainScroll.contentSize = CGSizeMake(ScreenWidth, h +10);
+    
+    
+}
+
+@end

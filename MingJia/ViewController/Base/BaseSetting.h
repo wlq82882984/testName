@@ -1,0 +1,78 @@
+//
+//  BaseSetting.h
+//  WaterMan
+//
+//  Created by 陈梦悦 on 15-10-30.
+//  Copyright (c) 2015年 baichun. All rights reserved.
+//
+
+#ifndef WaterMan_BaseSetting_h
+#define WaterMan_BaseSetting_h
+
+#define SizeScale(s) ([[UIScreen mainScreen] bounds].size.height > 568 ?  ([[UIScreen mainScreen] bounds].size.height / 568.0 * (s)) : (s * 1.0))
+
+#define HEXCOLOR(c)                         [UIColor colorWithRed:((c>>16)&0xFF)/255.0 green:((c>>8)&0xFF)/255.0 blue:(c&0xFF)/255.0 alpha:1.0]
+
+
+//  大小尺寸
+#define ScreenWidth                         [[UIScreen mainScreen] bounds].size.width
+#define ScreenHeight                        [[UIScreen mainScreen] bounds].size.height
+
+//font
+#define SYSTEM_FONT_(x)                    [UIFont systemFontOfSize:x]
+#define SYSTEM_FONT_BOLD_(a)               [UIFont boldSystemFontOfSize:a]
+#define FONT_TEXTSIZE_Normal               SYSTEM_FONT_(16)
+#define FONT_TEXTSIZE_Med                  SYSTEM_FONT_(14)
+#define FONT_TEXTSIZE_Litter               SYSTEM_FONT_(12)
+
+// corner
+#define CONRNER_NORAML    5
+#define CONRNER_BIG       8
+
+//pageSize
+#define PAGESIZE_15      15
+#define PAGESIZE_20      20
+#define PAGESIZE_30      30
+
+//color
+#define CLEAN_COLOR                   [UIColor clearColor]
+#define WHITE_COLOR                   [UIColor whiteColor]
+#define BLACK_COLOR                   [UIColor blackColor]
+#define NAV_BAR_COLOR                 HEXCOLOR(0x669d03)  //导航栏背景色
+#define TABBAR_TEXT_COLOR_SEL         HEXCOLOR(0x3598dc)  //tabbar栏字体颜色_选中
+#define TABBAR_TEXT_COLOR_NOR         HEXCOLOR(0x636568)  //tabbar栏字体颜色_未选中
+#define APP_BACKGROUND_COLOR          HEXCOLOR(0xffffff)  // 主背景色
+#define CELL_TEXT_COLOR               HEXCOLOR(0x808080)  //HEXCOLOR(0xfe630f)
+#define Color_font_Med                HEXCOLOR(0x666666)
+#define Color_font_dark               HEXCOLOR(0x323232)
+#define BACK_COLL_HEAD                HEXCOLOR(0xfafafa)
+#define COLOR_line_HEAD               HEXCOLOR(0xe6e6e6)
+#define COLOR_line                    HEXCOLOR(0xeeeeee)
+#define Color_font_light              HEXCOLOR(0x999999)
+
+#define DELETE_BTN_COLOR              HEXCOLOR(0xda433f)
+#define Color_btn_likeBar             HEXCOLOR(0x486AA9)
+#define Color_border_likeBar          HEXCOLOR(0xc8c8c8)
+#define Color_font_likeBar            HEXCOLOR(0x4698d4)
+
+//request 测试test
+//#define SERVER_URL            @"http://192.168.0.106:8080/sfapiprj/webService"
+//#define SERVER__URL_BASE      @"http://192.168.0.106:8080/sfapiprj/"
+//#define SERVER_URL            @"http://115.28.61.108:8789/sfapiprj/webService"
+//#define SERVER__URL_BASE      @"http://115.28.61.108:8789/sfapiprj/"
+//#define AliPayCallBack        @"http://115.28.61.108:8789/sfapiprj/alipaySuccess.action";
+//#define Audion_Url            @"http://audio.ggj100.com/ggjaudio"
+//#define DELEGATE_URL          @"http://115.28.61.108:8789/protocol.html"
+
+//request 正式  http://mj.reeease.com/    http://app.mjxypt.com/api/
+#define SERVER_URL            @"http://app.mjxypt.com/api/"
+#define SERVER__URL_BASE      @"http://app.mjxypt.com/api/"
+#define AliPayCallBack        @"http://120.27.132.248:8788/sfapiprj/alipaySuccess.action";
+#define Audion_Url            @"http://audio.ggj100.com/ggjaudio"
+#define DELEGATE_URL          @"http://120.27.132.248:8788/protocol.html"
+
+#define IMAGES_OSS_PIC        @"http://img.ggj100.com/ggjpic"
+#define IMAGES_ICON_BIG       @"http://img.ggj100.com/ggjpic"
+#define IMAGES_ICON_SAMLL     @"http://img.ggj100.com/ggjpic"
+
+#endif

@@ -1,0 +1,65 @@
+//
+//  InterOrderViewController.m
+//  MingJia
+//
+//  Created by admin on 15/12/30.
+//  Copyright © 2015年 BCKJ. All rights reserved.
+//
+
+#import "InterOrderViewController.h"
+#import "MJInterOrderDefultViewController.h"
+
+@interface InterOrderViewController ()<UITextFieldDelegate>{
+    UITextField *companyTxt;
+}
+
+@property(nonatomic,strong)UITableView *mainTabV;
+
+@end
+
+@implementation InterOrderViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.title = @"路线查询";
+    [self drawView];
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [companyTxt resignFirstResponder];
+}
+
+- (void)drawView{
+    UILabel *title = [UILabel createLabelWithFrame:CGRectMake(20, 13, 70, 14) backgroundColor:CLEAN_COLOR textColor:[UIColor blackColor] font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentLeft text:@"公司名称"];
+    [self.view addSubview:title];
+    UILabel *tapline = [UILabel createLabelWithFrame:CGRectMake(5, 40, ScreenWidth -10, 1) backgroundColor:Color_font_Med textColor:[UIColor lightGrayColor] font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentLeft text:@""];
+    [self.view addSubview:tapline];
+    
+    companyTxt = [UITextField createTextFieldWithFrame:CGRectMake(90, 0, ScreenWidth - 120, 40) backgroundColor:CLEAN_COLOR borderStyle:UITextBorderStyleNone placeholder:@"请输入物流公司" text:@"" textColor:[UIColor blackColor] font:SYSTEM_FONT_(16) textalignment:NSTextAlignmentLeft];
+    companyTxt.delegate = self;
+    [self.view addSubview:companyTxt];
+    
+    UIButton *searchBtn = [UIButton createButtonwithFrame:CGRectMake(10, CGRectGetMaxY(tapline.frame) +10, ScreenWidth - 20, 40) backgroundColor:TABBAR_TEXT_COLOR_SEL image:[UIImage imageNamed:@""]];
+    [searchBtn addTarget:self action:@selector(gotosasa) forControlEvents:UIControlEventTouchUpInside];
+    [searchBtn setTitle:@"查询" forState:UIControlStateNormal];
+    [searchBtn setTitleColor:WHITE_COLOR forState:UIControlStateNormal];
+    searchBtn.layer.cornerRadius = 5;
+    [self.view addSubview:searchBtn];
+}
+
+- (void)gotosasa{
+    MJInterOrderDefultViewController *vc = [[MJInterOrderDefultViewController alloc]init];
+    [self.navigationController pushViewController:vc animated:NO];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [companyTxt resignFirstResponder];
+    return YES;
+}
+
+
+@end

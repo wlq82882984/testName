@@ -1,0 +1,77 @@
+//
+//  MJLineListViewController.m
+//  MingJia
+//
+//  Created by admin on 15/12/26.
+//  Copyright © 2015年 BCKJ. All rights reserved.
+//
+
+#import "MJLineListViewController.h"
+#import "LineListCell.h"
+
+@interface MJLineListViewController ()<UITableViewDataSource,UITableViewDelegate>{
+    UIButton *nextBtn;
+}
+
+@property(nonatomic,strong)UITableView *myTabview;
+
+@end
+
+@implementation MJLineListViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.title = @"线路列表";
+    [self drawView];
+    [self drawBottomV];
+}
+
+- (void)drawView{
+    _myTabview = [UITableView createTableViewWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 64 - 60) style:UITableViewStylePlain backgroundColor:CLEAN_COLOR delegate:self dataSource:self];
+    [_myTabview setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [self.view addSubview:_myTabview];
+    
+}
+
+- (void)drawBottomV{
+    UIView *bottomV = [UIView createViewWithFrame:CGRectMake(0, ScreenHeight - 64 - 60, ScreenWidth, 60) backgroundColor:[UIColor colorWithHex:0xf5f5f5 alpha:1.0]];
+    [self.view addSubview:bottomV];
+    
+    nextBtn = [UIButton createButtonwithFrame:CGRectMake(10, 10, SizeScale(210), 40) backgroundColor:TABBAR_TEXT_COLOR_SEL image:[UIImage imageNamed:@""]];
+    nextBtn.layer.cornerRadius = 5;
+    [nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
+    [nextBtn setTitleColor:WHITE_COLOR forState:UIControlStateNormal];
+    nextBtn.titleLabel.font = SYSTEM_FONT_(14);
+    [bottomV addSubview:nextBtn];
+    
+    UIButton *allBtn = [UIButton createButtonwithFrame:CGRectMake( ScreenWidth - SizeScale(70) -10, 10, SizeScale(70), 40) backgroundColor:TABBAR_TEXT_COLOR_SEL image:[UIImage imageNamed:@""]];
+    allBtn.layer.cornerRadius = 5;
+    [allBtn setTitle:@"全选" forState:UIControlStateNormal];
+    [allBtn setTitleColor:WHITE_COLOR forState:UIControlStateNormal];
+    allBtn.titleLabel.font = SYSTEM_FONT_(14);
+    [bottomV addSubview:allBtn];
+    
+}
+
+#pragma mark TableViewDataSource
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 10;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    LineListCell *cell = [tableView dequeueReusableCellWithIdentifier:[NSString stringWithFormat:@"listCell%i",(int)indexPath.row]];
+    if (!cell) {
+        cell = [[LineListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[NSString stringWithFormat:@"listCell%i",(int)indexPath.row]];
+    }
+    cell.rankStar = 3;
+    cell.phoneLab = @"13813813812";
+    cell.teleLab = @"0519-82888888";
+    return cell;
+}
+
+#pragma mark TableViewDelegate
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath{
+    return 130;
+}
+
+@end

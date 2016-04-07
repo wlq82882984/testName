@@ -1,0 +1,51 @@
+//
+//  AppDelegate.m
+//  MingJia
+//
+//  Created by admin on 15/12/24.
+//  Copyright © 2015年 BCKJ. All rights reserved.
+//
+
+#import "AppDelegate.h"
+#import "MainTabBarController.h"
+#import "BaseNavigationController.h"
+#import "MJDetailOrderViewController.h"  // 订单详情
+#import "MJLoginViewController.h"   // 登录
+#import "MJQuiryViewController.h"  //询价
+#import "MJEvaluationViewController.h"  // 评价
+
+@interface AppDelegate ()
+
+@end
+
+@implementation AppDelegate
+
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    MainTabBarController *maintb = [[MainTabBarController alloc]init];
+//    BaseNavigationController *maintb = [[BaseNavigationController alloc]initWithRootViewController:[[MJLoginViewController alloc]init]];
+//    MJDetailOrderViewController *maintb = [[MJDetailOrderViewController alloc]init];
+//    MJQuiryViewController *maintb = [[MJQuiryViewController alloc]init];
+//    MJEvaluationViewController *maintb = [[MJEvaluationViewController alloc]init];
+    self.window.rootViewController = maintb;
+    [self.window makeKeyAndVisible];
+    return YES;
+}
+
+- (void)applicationWillResignActive:(UIApplication *)application {
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application {
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application {
+}
+
+@end

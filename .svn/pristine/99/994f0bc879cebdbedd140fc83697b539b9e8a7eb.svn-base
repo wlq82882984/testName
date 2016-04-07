@@ -1,0 +1,46 @@
+//
+//  UtilString.h
+//  hysj
+//
+//  Created by baichun on 15-9-16.
+//  Copyright (c) 2015年 BBKJ. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@interface UtilString : NSObject
++(NSString *)getNoNilString:(NSString *)str;
++(NSString *)getPriceWithProduct:(NSInteger)priceNum;
+
++(NSString *)getTimeFormmatterHMS:(NSNumber *)time formatStr:(NSString *)timeFormatStr;
+
++ (NSString *)getOSSPictureWithUrlString:(NSString *)urlstr;
++ (NSString *)getBigPictureWithUrlString:(NSString *)urlstr;
++ (NSString *)getSamllPictureWithUrlString:(NSString *)urlstr;
+
++(NSURL *)getSmallImageUrlWithString:(NSString *)string;
++(NSURL *)getBigImageUrlWithString:(NSString *)string;
++(NSURL *)getOSSImageUrlWithString:(NSString *)string;
+
++ (NSString *)documentsPath:(NSString *)fileName;
+
+/**
+ *  获取document下GroupData目录，GroupData用来存储群组信息
+ */
++ (NSString *)documentsGroupDataPath:(NSString *)fileName;
+
++ (NSString *)documentGroupImageFilesPlistPath;
+
++ (NSString *)documentPersonalImageFilesPlistPath;
+
+/**
+ *  存储好友和群信息
+ */
++ (NSString *)documentFriendAndGroupChatDataPlistPath;
+
+/**
+ *  临时聊天的好友列表
+ */
++ (NSString *)documentTemporaryChatFriendsPlistPath;
+
+@end

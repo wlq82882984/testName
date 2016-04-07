@@ -1,0 +1,35 @@
+//
+//  ComplainCell.m
+//  MingJia
+//
+//  Created by admin on 15/12/28.
+//  Copyright © 2015年 BCKJ. All rights reserved.
+//
+
+#import "ComplainCell.h"
+
+@implementation ComplainCell
+
+- (void)awakeFromNib {
+    // Initialization code
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+}
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        _titLab = [UILabel createLabelWithFrame:CGRectMake(0, 0, ScreenWidth, self.frame.size.height) backgroundColor:CLEAN_COLOR textColor:[UIColor blackColor] font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentCenter text:@""];
+        [self addSubview:_titLab];
+        
+        _tapLine = [UILabel createLabelWithFrame:CGRectMake(0, 39, ScreenWidth, 1) backgroundColor:CELL_TEXT_COLOR textColor:[UIColor blackColor] font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentCenter text:@""];
+        [self addSubview:_tapLine];
+        
+    }
+    return self;
+}
+
+@end

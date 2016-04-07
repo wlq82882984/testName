@@ -1,0 +1,338 @@
+//
+//  MJInterOrderDefultViewController.m
+//  MingJia
+//
+//  Created by admin on 15/12/30.
+//  Copyright © 2015年 BCKJ. All rights reserved.
+//
+
+#import "MJInterOrderDefultViewController.h"
+
+@interface MJInterOrderDefultViewController ()<UITextFieldDelegate,UIPickerViewDataSource,UIPickerViewDelegate>{
+    UITextField *nametxt;
+    UITextField *phonetxt;
+    UITextField *begintxt;
+    UITextField *addresstxt;
+    
+    UITextField *recevenametxt;
+    UITextField *recevephonetxt;
+    UITextField *endtxt;
+    UITextField *receveaddtxt;
+    
+    UITextField *pronametxt;
+    UITextField *pronumtxt;
+    UITextField *weighttxt;
+    UITextField *bulktxt;
+    
+    UITextField *moneytxt;
+    UIButton    *delivertype;
+    UITextField *receipttxt;
+    UITextField *remarktxt;
+    
+    UIView      *pickView;
+}
+
+@property(nonatomic,strong)UIScrollView *mainScroll;
+@property(nonatomic,strong)UIPickerView *dataPickV;
+
+@end
+
+@implementation MJInterOrderDefultViewController
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    return 2;
+}
+
+- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component{
+    return 60;
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+    if (row == 0) {
+        return @"送货";
+    }
+    else {
+        return @"自提";
+    }
+}
+
+- (void)creatPick{
+    _dataPickV = [[UIPickerView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 60)];
+    _dataPickV.delegate = self;
+    _dataPickV.dataSource = self;
+    [pickView addSubview:_dataPickV];
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
+    if (row == 0) {
+        [delivertype setTitle:@"送货" forState:UIControlStateNormal];
+    }
+    else {
+    [delivertype setTitle:@"自提" forState:UIControlStateNormal];
+    }
+    [self hidepickV];
+}
+
+- (void)hidepickV{
+    [UIView animateWithDuration:.5 animations:^{
+        pickView.frame = CGRectMake(0, ScreenHeight, ScreenWidth, 60);
+    }];
+}
+
+- (void)showpickV{
+    [UIView animateWithDuration:.5 animations:^{
+        pickView.frame = CGRectMake(0, ScreenHeight-124, ScreenWidth, 60);
+    }];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.title = @"网上办单";
+    _mainScroll = [[UIScrollView alloc]init];
+    _mainScroll.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight - 64);
+    [self.view addSubview:_mainScroll];
+    pickView = [UIView createViewWithFrame:CGRectMake(0, ScreenHeight, ScreenWidth, 60) backgroundColor:TABBAR_TEXT_COLOR_SEL];
+    [self.view addSubview:pickView];
+    [self creatPick];
+    [self drawView];
+    //键盘frame变化的时候会调用该通知的方法
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
+}
+
+//当键盘位置发生改变的时候会调用该方法
+-(void)keyboardWillChangeFrame:(NSNotification *)notification{
+    //键盘弹出的时间
+    CGFloat duration=[notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    //键盘自己的frame
+    CGRect keyBoardFrame=[notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    //计算当前view的y方向的偏移量
+    CGFloat transfomY=keyBoardFrame.origin.y-self.view.frame.size.height;
+    //UIView动画
+    [UIView animateWithDuration:duration animations:^{
+        //        self.view.transform=CGAffineTransformMakeTranslation(0, transfomY);
+        if (transfomY>0) {
+            _mainScroll.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight - 64);
+        }
+        else{
+            _mainScroll.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight - 64 -254);
+        }
+        //        NSLog(@"keyboard   %@",NSStringFromCGRect(keyBoardFrame));
+        //        NSLog(@"view  %@",NSStringFromCGRect(self.view.frame));
+        //        NSLog(@"table %@",NSStringFromCGRect(self.tableView.frame));
+    }];
+}
+
+- (void)drawView{
+    int offset = 0;
+    
+    UIView *view1 = [UIView createViewWithFrame:CGRectMake(0, offset, ScreenWidth, 30) backgroundColor:BACK_COLL_HEAD];
+    [_mainScroll addSubview:view1];
+    
+//    发货人信息
+    UILabel *viewlab1 = [UILabel createLabelWithFrame:CGRectMake(0, 0, ScreenWidth, 30) backgroundColor:CLEAN_COLOR textColor:Color_font_dark font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentLeft text:@"  发货人信息"];
+    [view1 addSubview:viewlab1];
+    
+    UILabel *title01 = [UILabel createLabelWithFrame:CGRectMake(0, offset + 30, 80, 40) backgroundColor:CLEAN_COLOR textColor:Color_font_dark font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentRight text:@"发货人:"];
+    [_mainScroll addSubview:title01];
+    
+    UILabel *title02 = [UILabel createLabelWithFrame:CGRectMake(0, offset + 70, 80, 40) backgroundColor:CLEAN_COLOR textColor:Color_font_dark font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentRight text:@"*手机:"];
+    NSString *attrStr2= @"*手机:";
+    NSRange range2 = [attrStr2 rangeOfString:@"*"];
+    NSMutableAttributedString *attRemain2 = [[NSMutableAttributedString alloc] initWithString:attrStr2];
+    [attRemain2 setAttributes:@{NSForegroundColorAttributeName : [UIColor redColor],   NSFontAttributeName : SYSTEM_FONT_(16)} range:range2];
+    title02.attributedText=attRemain2;
+    [_mainScroll addSubview:title02];
+    
+    UILabel *title03 = [UILabel createLabelWithFrame:CGRectMake(0, offset + 110, 80, 40) backgroundColor:CLEAN_COLOR textColor:Color_font_dark font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentRight text:@"起始地:"];
+    [_mainScroll addSubview:title03];
+    UILabel *title04 = [UILabel createLabelWithFrame:CGRectMake(0, offset + 150, 80, 40) backgroundColor:CLEAN_COLOR textColor:Color_font_dark font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentRight text:@"地址:"];
+    [_mainScroll addSubview:title04];
+    
+    nametxt = [UITextField createTextFieldWithFrame:CGRectMake(90, offset +30, 150, 40) backgroundColor:CLEAN_COLOR borderStyle:UITextBorderStyleNone placeholder:@"" text:@"" textColor:TABBAR_TEXT_COLOR_NOR font:SYSTEM_FONT_(16) textalignment:NSTextAlignmentLeft];
+    nametxt.delegate = self;
+    [_mainScroll addSubview:nametxt];
+    phonetxt = [UITextField createTextFieldWithFrame:CGRectMake(90, offset +70, 150, 40) backgroundColor:CLEAN_COLOR borderStyle:UITextBorderStyleNone placeholder:@"" text:@"" textColor:TABBAR_TEXT_COLOR_NOR font:SYSTEM_FONT_(16) textalignment:NSTextAlignmentLeft];
+    phonetxt.delegate = self;
+    [_mainScroll addSubview:phonetxt];
+    begintxt = [UITextField createTextFieldWithFrame:CGRectMake(90, offset +110, 150, 40) backgroundColor:CLEAN_COLOR borderStyle:UITextBorderStyleNone placeholder:@"" text:@"" textColor:TABBAR_TEXT_COLOR_NOR font:SYSTEM_FONT_(16) textalignment:NSTextAlignmentLeft];
+    begintxt.enabled = NO;
+    [_mainScroll addSubview:begintxt];
+//    加个btn
+    UIButton *btnChoose = [UIButton createButtonwithFrame:begintxt.frame backgroundColor:CLEAN_COLOR image:[UIImage imageNamed:@""]];
+    btnChoose.tag = 101;
+    [btnChoose addTarget:self action:@selector(chooseAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_mainScroll addSubview:btnChoose];
+    addresstxt = [UITextField createTextFieldWithFrame:CGRectMake(90, offset +150, ScreenWidth - 120, 40) backgroundColor:CLEAN_COLOR borderStyle:UITextBorderStyleNone placeholder:@"如需提货请输入详细地址" text:@"" textColor:TABBAR_TEXT_COLOR_NOR font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentLeft];
+    addresstxt.delegate = self;
+    [_mainScroll addSubview:addresstxt];
+    
+    //   收货人信息
+    offset += 190;
+    UIView *view2 = [UIView createViewWithFrame:CGRectMake(0, offset, ScreenWidth, 30) backgroundColor:BACK_COLL_HEAD];
+    [_mainScroll addSubview:view2];
+    
+    UILabel *viewlab2 = [UILabel createLabelWithFrame:CGRectMake(0, 0, ScreenWidth, 30) backgroundColor:CLEAN_COLOR textColor:Color_font_dark font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentLeft text:@"  收货人信息"];
+    [view2 addSubview:viewlab2];
+    
+    UILabel *title11 = [UILabel createLabelWithFrame:CGRectMake(0, offset + 30, 80, 40) backgroundColor:CLEAN_COLOR textColor:Color_font_dark font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentRight text:@"收货人:"];
+    [_mainScroll addSubview:title11];
+    
+    UILabel *title12 = [UILabel createLabelWithFrame:CGRectMake(0, offset + 70, 80, 40) backgroundColor:CLEAN_COLOR textColor:Color_font_dark font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentRight text:@"*手机:"];
+    NSString *attrStr1= @"*手机:";
+    NSRange range1 = [attrStr1 rangeOfString:@"*"];
+    NSMutableAttributedString *attRemain1 = [[NSMutableAttributedString alloc] initWithString:attrStr1];
+    [attRemain1 setAttributes:@{NSForegroundColorAttributeName : [UIColor redColor],   NSFontAttributeName : SYSTEM_FONT_(16)} range:range1];
+    title12.attributedText=attRemain1;
+    [_mainScroll addSubview:title12];
+    
+    UILabel *title13 = [UILabel createLabelWithFrame:CGRectMake(0, offset + 110, 80, 40) backgroundColor:CLEAN_COLOR textColor:Color_font_dark font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentRight text:@"到达地:"];
+    [_mainScroll addSubview:title13];
+    UILabel *title14 = [UILabel createLabelWithFrame:CGRectMake(0, offset + 150, 80, 40) backgroundColor:CLEAN_COLOR textColor:Color_font_dark font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentRight text:@"地址:"];
+    [_mainScroll addSubview:title14];
+    
+    recevenametxt = [UITextField createTextFieldWithFrame:CGRectMake(90, offset +30, 150, 40) backgroundColor:CLEAN_COLOR borderStyle:UITextBorderStyleNone placeholder:@"" text:@"" textColor:TABBAR_TEXT_COLOR_NOR font:SYSTEM_FONT_(16) textalignment:NSTextAlignmentLeft];
+    recevenametxt.delegate = self;
+    [_mainScroll addSubview:recevenametxt];
+    recevephonetxt = [UITextField createTextFieldWithFrame:CGRectMake(90, offset +70, 150, 40) backgroundColor:CLEAN_COLOR borderStyle:UITextBorderStyleNone placeholder:@"" text:@"" textColor:TABBAR_TEXT_COLOR_NOR font:SYSTEM_FONT_(16) textalignment:NSTextAlignmentLeft];
+    recevephonetxt.delegate = self;
+    [_mainScroll addSubview:recevephonetxt];
+    endtxt = [UITextField createTextFieldWithFrame:CGRectMake(90, offset +110, 150, 40) backgroundColor:CLEAN_COLOR borderStyle:UITextBorderStyleNone placeholder:@"" text:@"" textColor:TABBAR_TEXT_COLOR_NOR font:SYSTEM_FONT_(16) textalignment:NSTextAlignmentLeft];
+    endtxt.enabled = NO;
+    [_mainScroll addSubview:endtxt];
+    //    加个btn
+    UIButton *btn2Choose = [UIButton createButtonwithFrame:begintxt.frame backgroundColor:CLEAN_COLOR image:[UIImage imageNamed:@""]];
+    btn2Choose.tag = 102;
+    [btn2Choose addTarget:self action:@selector(chooseAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_mainScroll addSubview:btn2Choose];
+    receveaddtxt = [UITextField createTextFieldWithFrame:CGRectMake(90, offset +150, 150, 40) backgroundColor:CLEAN_COLOR borderStyle:UITextBorderStyleNone placeholder:@"请输入详细地址" text:@"" textColor:TABBAR_TEXT_COLOR_NOR font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentLeft];
+    receveaddtxt.delegate = self;
+    [_mainScroll addSubview:receveaddtxt];
+    
+//    货物信息
+    offset += 190;
+    UIView *view3 = [UIView createViewWithFrame:CGRectMake(0, offset, ScreenWidth, 30) backgroundColor:BACK_COLL_HEAD];
+    [_mainScroll addSubview:view3];
+    
+    UILabel *viewlab3 = [UILabel createLabelWithFrame:CGRectMake(0, 0, ScreenWidth, 30) backgroundColor:CLEAN_COLOR textColor:Color_font_dark font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentLeft text:@"  货物信息"];
+    [view3 addSubview:viewlab3];
+    
+    UILabel *title21 = [UILabel createLabelWithFrame:CGRectMake(0, offset + 30, 80, 40) backgroundColor:CLEAN_COLOR textColor:Color_font_dark font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentRight text:@"*名称:"];
+    title21.attributedText = [self changeAttr:title21.text];
+    [_mainScroll addSubview:title21];
+    UILabel *title22 = [UILabel createLabelWithFrame:CGRectMake(0, offset + 70, 80, 40) backgroundColor:CLEAN_COLOR textColor:Color_font_dark font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentRight text:@"*件数:"];
+    title22.attributedText = [self changeAttr:title22.text];
+    [_mainScroll addSubview:title22];
+    UILabel *title23 = [UILabel createLabelWithFrame:CGRectMake(0, offset + 110, 80, 40) backgroundColor:CLEAN_COLOR textColor:Color_font_dark font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentRight text:@"*重量(吨):"];
+    title23.attributedText = [self changeAttr:title23.text];
+    [_mainScroll addSubview:title23];
+    UILabel *title24 = [UILabel createLabelWithFrame:CGRectMake(0, offset + 150, 80, 40) backgroundColor:CLEAN_COLOR textColor:Color_font_dark font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentRight text:@"*体积(方):"];
+    title24.attributedText = [self changeAttr:title24.text];
+    [_mainScroll addSubview:title24];
+    
+    pronametxt = [UITextField createTextFieldWithFrame:CGRectMake(90, offset +30, 150, 40) backgroundColor:CLEAN_COLOR borderStyle:UITextBorderStyleNone placeholder:@"" text:@"" textColor:TABBAR_TEXT_COLOR_NOR font:SYSTEM_FONT_(16) textalignment:NSTextAlignmentLeft];
+    pronametxt.delegate = self;
+    [_mainScroll addSubview:pronametxt];
+    pronumtxt = [UITextField createTextFieldWithFrame:CGRectMake(90, offset +70, 150, 40) backgroundColor:CLEAN_COLOR borderStyle:UITextBorderStyleNone placeholder:@"" text:@"" textColor:TABBAR_TEXT_COLOR_NOR font:SYSTEM_FONT_(16) textalignment:NSTextAlignmentLeft];
+    pronumtxt.delegate = self;
+    [_mainScroll addSubview:pronumtxt];
+    weighttxt = [UITextField createTextFieldWithFrame:CGRectMake(90, offset +110, 150, 40) backgroundColor:CLEAN_COLOR borderStyle:UITextBorderStyleNone placeholder:@"" text:@"" textColor:TABBAR_TEXT_COLOR_NOR font:SYSTEM_FONT_(16) textalignment:NSTextAlignmentLeft];
+    weighttxt.delegate = self;
+    [_mainScroll addSubview:weighttxt];
+    bulktxt = [UITextField createTextFieldWithFrame:CGRectMake(90, offset +150, 150, 40) backgroundColor:CLEAN_COLOR borderStyle:UITextBorderStyleNone placeholder:@"" text:@"" textColor:TABBAR_TEXT_COLOR_NOR font:SYSTEM_FONT_(16) textalignment:NSTextAlignmentLeft];
+    bulktxt.delegate = self;
+    [_mainScroll addSubview:bulktxt];
+    
+//    订单信息
+    offset += 190;
+    UIView *view4 = [UIView createViewWithFrame:CGRectMake(0, offset, ScreenWidth, 30) backgroundColor:BACK_COLL_HEAD];
+    [_mainScroll addSubview:view4];
+    
+    UILabel *viewlab4 = [UILabel createLabelWithFrame:CGRectMake(0, 0, ScreenWidth, 30) backgroundColor:CLEAN_COLOR textColor:Color_font_dark font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentLeft text:@"  订单信息"];
+    [view4 addSubview:viewlab4];
+    
+    UILabel *title31 = [UILabel createLabelWithFrame:CGRectMake(0, offset + 30, 80, 40) backgroundColor:CLEAN_COLOR textColor:Color_font_dark font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentRight text:@"*运费:"];
+    title31.attributedText = [self changeAttr:title31.text];
+    [_mainScroll addSubview:title31];
+    UILabel *title32 = [UILabel createLabelWithFrame:CGRectMake(0, offset + 70, 80, 40) backgroundColor:CLEAN_COLOR textColor:Color_font_dark font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentRight text:@"交接方式:"];
+    [_mainScroll addSubview:title32];
+    UILabel *title33 = [UILabel createLabelWithFrame:CGRectMake(0, offset + 110, 80, 40) backgroundColor:CLEAN_COLOR textColor:Color_font_dark font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentRight text:@"回单:"];
+    [_mainScroll addSubview:title33];
+    UILabel *title34 = [UILabel createLabelWithFrame:CGRectMake(0, offset + 150, 80, 40) backgroundColor:CLEAN_COLOR textColor:Color_font_dark font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentRight text:@"备注:"];
+    [_mainScroll addSubview:title34];
+    
+    moneytxt = [UITextField createTextFieldWithFrame:CGRectMake(90, offset +30, 150, 40) backgroundColor:CLEAN_COLOR borderStyle:UITextBorderStyleNone placeholder:@"" text:@"" textColor:TABBAR_TEXT_COLOR_NOR font:SYSTEM_FONT_(16) textalignment:NSTextAlignmentLeft];
+    moneytxt.delegate = self;
+    [_mainScroll addSubview:moneytxt];
+    delivertype = [UIButton createButtonwithFrame:CGRectMake(90, offset +70, 150, 40) backgroundColor:BACK_COLL_HEAD image:[UIImage imageNamed:@""]];
+    delivertype.tag = 201;
+    [delivertype addTarget:self action:@selector(chooseType:) forControlEvents:UIControlEventTouchUpInside];
+    delivertype.layer.cornerRadius = 5;
+    [delivertype setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [delivertype setTitle:@"送货" forState:UIControlStateNormal];
+    [_mainScroll addSubview:btn2Choose];
+    [_mainScroll addSubview:delivertype];
+    receipttxt = [UITextField createTextFieldWithFrame:CGRectMake(90, offset +110, 150, 40) backgroundColor:CLEAN_COLOR borderStyle:UITextBorderStyleNone placeholder:@"请输入回单份数" text:@"" textColor:TABBAR_TEXT_COLOR_NOR font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentLeft];
+    receipttxt.delegate = self;
+    [_mainScroll addSubview:receipttxt];
+    remarktxt = [UITextField createTextFieldWithFrame:CGRectMake(90, offset +150, 150, 40) backgroundColor:CLEAN_COLOR borderStyle:UITextBorderStyleNone placeholder:@"" text:@"" textColor:TABBAR_TEXT_COLOR_NOR font:SYSTEM_FONT_(14) textalignment:NSTextAlignmentLeft];
+    remarktxt.delegate = self;
+    [_mainScroll addSubview:remarktxt];
+    
+    UIButton *saveBtn = [UIButton createButtonwithFrame:CGRectMake(20, CGRectGetMaxY(title34.frame) +15, ScreenWidth - 40, 40) backgroundColor:TABBAR_TEXT_COLOR_SEL image:[UIImage imageNamed:@""]];
+    [saveBtn setTitle:@"保  存" forState:UIControlStateNormal];
+    [saveBtn setTitleColor:WHITE_COLOR forState:UIControlStateNormal];
+    saveBtn.layer.cornerRadius = 5;
+    [_mainScroll addSubview:saveBtn];
+    
+    _mainScroll.contentSize = CGSizeMake( ScreenWidth, CGRectGetMaxY(saveBtn.frame) +15);
+    UITapGestureRecognizer *Tap =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resignFirst)];
+    _mainScroll.userInteractionEnabled=YES;
+    [_mainScroll addGestureRecognizer:Tap];
+}
+
+- (NSMutableAttributedString *)changeAttr:(NSString *)str{
+    NSString *attrStr= str;
+    NSRange range = [attrStr rangeOfString:@"*"];
+    NSMutableAttributedString *attRemain = [[NSMutableAttributedString alloc] initWithString:attrStr];
+    [attRemain setAttributes:@{NSForegroundColorAttributeName : [UIColor redColor],   NSFontAttributeName : SYSTEM_FONT_(16)} range:range];
+    return attRemain;
+}
+
+- (void)resignFirst{
+    [self hidepickV];
+    [nametxt resignFirstResponder];
+    [phonetxt resignFirstResponder];
+    [receveaddtxt resignFirstResponder];
+    [recevenametxt resignFirstResponder];
+    [recevephonetxt resignFirstResponder];
+    [pronumtxt resignFirstResponder];
+    [weighttxt resignFirstResponder];
+    [pronametxt resignFirstResponder];
+    [bulktxt resignFirstResponder];
+    [addresstxt resignFirstResponder];
+    [remarktxt resignFirstResponder];
+    [endtxt resignFirstResponder];
+    [receveaddtxt resignFirstResponder];
+    [moneytxt resignFirstResponder];
+    [receipttxt resignFirstResponder];
+    [remarktxt resignFirstResponder];
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    [self hidepickV];
+    return YES;
+}
+
+- (void)chooseAction:(id)sender{
+
+}
+
+- (void)chooseType:(id)sender{
+    [self showpickV];
+}
+
+@end
