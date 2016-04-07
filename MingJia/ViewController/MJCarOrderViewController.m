@@ -28,7 +28,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"整车订单";
+    self.title = @"整车订单的的的的";
     arrList = [NSMutableArray array];
     [self drawTabV];
     
